@@ -23,8 +23,8 @@
                             <th>Catatan</th>
                             <th>Action</th>
                         </tr>
-                        <tbody v-if="this.filteredStudents.length > 0">
-                            <tr v-for="(student, id) in filteredStudents" :key="id">
+                        <tbody v-if="this.paginatedStudents.length > 0">
+                            <tr v-for="(student, id) in paginatedStudents" :key="id">
                                 <td>{{student.id}}</td>
                                 <td>{{ student.nama }}</td>
                                 <td>{{ student.alamat }}</td>
@@ -51,6 +51,23 @@
                         </tbody>
                     </table>
                     </div>
+                    <nav aria-label="Page navigation">
+                    <ul class="pagination justify-content-end">
+                        <li class="page-item" :class="{ disabled: currentPage === 1 }">
+                        <a class="page-link" @click="gotoPage(currentPage - 1)" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                        </li>
+                        <li class="page-item" v-for="page in totalPages" :key="page" :class="{ active: currentPage === page }">
+                        <a class="page-link" @click="gotoPage(page)">{{ page }}</a>
+                        </li>
+                        <li class="page-item" :class="{ disabled: currentPage === totalPages }">
+                        <a class="page-link" @click="gotoPage(currentPage + 1)" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                        </li>
+                    </ul>
+                    </nav>
                 </div>
             </div>
         </div>
@@ -63,7 +80,9 @@ export default{
     data(){
         return{
             students:[],
-            searchKeyword:''
+            searchKeyword:'',
+            currentPage: 1, // Halaman saat ini
+            itemsPerPage: 10,
         }
     },
     mounted(){
@@ -82,7 +101,15 @@ export default{
                 student.catatan.toLowerCase().includes(keyword)
             );
         });
-    }
+    },
+    paginatedStudents() {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = startIndex + this.itemsPerPage;
+    return this.filteredStudents.slice(startIndex, endIndex);
+  },
+  totalPages() {
+    return Math.ceil(this.filteredStudents.length / this.itemsPerPage);
+  },
 },
     methods:{
         getStudents(){
@@ -99,7 +126,12 @@ export default{
                         this.getStudents();
                      })
             }
+        },
+        gotoPage(pageNumber) {
+        if (pageNumber >= 1 && pageNumber <= this.totalPages) {
+        this.currentPage = pageNumber;
         }
+    },
     }
 }
 </script>

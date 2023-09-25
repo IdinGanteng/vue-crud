@@ -15,22 +15,32 @@
             </div>
           </div>
         </div>
-        <!-- <div class="col-sm-6">
+        <div class="col-sm-6">
           <div class="card">
             <div class="card-body">
               <Line v-if="loaded" :data="lineChartData" />
             </div>
           </div>
-        </div> -->
+        </div>
       </div>
     </div>
   </template>
   
   <script>
     import { Bar, Pie, Line } from 'vue-chartjs'
-    import { Chart as ChartJS, Title, Tooltip, Legend,LineElement, ArcElement, BarElement, CategoryScale, LinearScale, PointElement } from 'chart.js'
+    import { 
+      Chart as ChartJS,
+      Title,
+      Tooltip,
+      Legend,
+      LineElement, 
+      ArcElement, 
+      BarElement, 
+      CategoryScale, 
+      LinearScale,
+      PointElement } from 'chart.js'
 
-    ChartJS.register(Title, Tooltip, Legend, BarElement, LineElement, ArcElement, CategoryScale, LinearScale)
+    ChartJS.register(Title, Tooltip, Legend, BarElement, LineElement, PointElement, ArcElement, CategoryScale, LinearScale)
 
   
   export default {
@@ -111,13 +121,13 @@
           labels: labels, // Label bulan
           datasets: [
             {
-              label: 'Grafik Garis',
+              label: 'Lunas',
               borderColor: 'blue', // Warna garis
               backgroundColor: 'transparent', // Warna latar belakang
               data: labels.map((bulan) => monthlyData[bulan].lunas) // Data untuk grafik garis
             },
             {
-              label: 'Grafik Garis',
+              label: 'Hutang',
               borderColor: 'red', // Warna garis
               backgroundColor: 'transparent', // Warna latar belakang
               data: labels.map((bulan) => monthlyData[bulan].hutang) // Data untuk grafik garis

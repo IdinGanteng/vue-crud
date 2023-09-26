@@ -1,24 +1,31 @@
 <template>
-    <div class="container mt-3">
+    <div class="container">
       <div class="row">
-        <div class="col-sm-6">
+        <div class="col-sm-6 mt-3">
           <div class="card">
             <div class="card-body card-bar">
               <Bar v-if="loaded" :data="barChartData" />
             </div>
           </div>
         </div>
-        <div class="col-sm-6">
+        <div class="col-sm-6 mt-3">
           <div class="card d-flex">
             <div class="card-body mx-auto card-pie">
               <Pie v-if="loaded" :data="pieChartData"/>
             </div>
           </div>
         </div>
-        <div class="col-sm-6">
+        <div class="col-sm-6 mt-3">
           <div class="card">
             <div class="card-body">
               <Line v-if="loaded" :data="lineChartData" />
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6 mt-3">
+          <div class="card">
+            <div class="card-body card-bar">
+              <Bar v-if="loaded" :data="barChartData" />
             </div>
           </div>
         </div>
